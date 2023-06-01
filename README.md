@@ -3,7 +3,7 @@ This utility generates an html file from a MD file for an open-tezos task.
 ## Install
 
 ```
-npm i -g @completium/open-tezos-md-task-util
+npm i -g @completium/open-tezos-md-task-util@latest
 ```
 
 ## Run
@@ -75,4 +75,12 @@ This is compiled to:
 
 ```html
 <a href="https://archetype-lang.org/" target="_blank" rel="noopener noreferrer" select-lang="archetype" data-lang="archetype">doc</a>
+```
+
+### Basic tags
+
+It supports basic html tags (`div`, `pre`, `code`, ...). For example to add the language selector:
+
+```md
+Choose your language : <div select-lang-selector="true" />
 ```
