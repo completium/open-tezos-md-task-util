@@ -77,10 +77,12 @@ This is compiled to:
 <a href="https://archetype-lang.org/" target="_blank" rel="noopener noreferrer" select-lang="archetype" data-lang="archetype">doc</a>
 ```
 
-### Basic tags
+### HTML tags
 
 It supports basic html tags (`div`, `pre`, `code`, ...). For example to add the language selector:
 
 ```md
 Choose your language : <div select-lang-selector="true" />
 ```
+
+
