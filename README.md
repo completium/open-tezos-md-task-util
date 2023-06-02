@@ -16,7 +16,7 @@ $ mdtask2html test.md > index.html
 
 ## Features
 
-### FrontMatter
+### Task metadata
 
 It supports frontMatter style PEM task medata. For example:
 
@@ -46,7 +46,7 @@ PEM task metadata are defaulted to:
 }
 ```
 
-### Code
+### Code block
 
 Language is specified with standard triple back quote followed by language id; for example:
 
