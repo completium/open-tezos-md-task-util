@@ -77,6 +77,26 @@ This is compiled to:
 <a href="https://archetype-lang.org/" target="_blank" rel="noopener noreferrer" select-lang="archetype" data-lang="archetype">doc</a>
 ```
 
+### Admonitions
+
+5 types of admonitions are supported: `info`, `note`, `tip`, `caution`, `danger`
+
+For example:
+
+```md
+:::info
+This is some information
+:::
+```
+
+### Katex equations
+
+Katex equation is available; for example:
+
+```md
+$$ (a+b)^2 = a^2 + 2*a*b + b^2 $$
+```
+
 ### HTML tags
 
 It supports basic html tags (`div`, `pre`, `code`, ...). For example to add the language selector:

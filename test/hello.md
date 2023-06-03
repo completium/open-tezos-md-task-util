@@ -1,5 +1,6 @@
 ---
 id : testTask
+title: Example
 authors : [benoit.rognier@edukera.com]
 ---
 
@@ -22,3 +23,13 @@ This is a bullet point list:
 This is the official [Tezos](https://tezos.com/) site.
 
 This is a [link](https://archetype-lang.org/ "archetype") just for archetype.
+
+:::info
+
+this is some information
+
+:::
+
+## Katex equation
+
+$$ (a+b)^2 = a^2 + 2*a*b + b^2 $$

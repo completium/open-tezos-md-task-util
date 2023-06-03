@@ -1,23 +1,32 @@
+import { hasAdmonition, rehypeAdmonition, RemarkAdmonition } from './admonition.mjs'
 import { evaluateSync } from '@mdx-js/mdx'
+import { readFileSync } from 'fs'
+import { dirname, join, resolve } from 'path'
 import { createElement } from 'react'
 import { renderToString } from 'react-dom/server'
 import * as runtime from 'react/jsx-runtime'
 import rehypeHighlight from 'rehype-highlight'
-import remarkGfm from 'remark-gfm'
 import remarkFrontMatter from 'remark-frontmatter'
-import { readFileSync } from 'fs'
-import { join } from 'path'
-import {read} from 'to-vfile'
-import {unified} from 'unified'
-import remarkParse from 'remark-parse'
 import remarkFrontmatter from 'remark-frontmatter'
+import remarkGfm from 'remark-gfm'
+import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
-import {matter as vfileMatter} from 'vfile-matter'
-import { VFile } from 'vfile'
+import { read } from 'to-vfile'
+import { unified } from 'unified'
 import { map, MapFunction } from 'unist-util-map'
 import { visit } from 'unist-util-visit'
+import { fileURLToPath } from 'url';
+import { VFile } from 'vfile'
+import { matter as vfileMatter } from 'vfile-matter'
+import rehypeKatex from 'rehype-katex';
+import remarkMath from 'remark-math';
+import { hasKatex, katexStyle } from './katex.mjs'
 
 const languages = ['michelson', 'ligo', 'mligo', 'religo', 'jsligo', 'smartpy', 'archetype']
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const DefaultPEMTaskMetaData = {
   // title is automatically fetched from the <title> markup
@@ -37,13 +46,13 @@ function getPEMTaskMetaData(data : any) {
   return { ...DefaultPEMTaskMetaData, ...data }
 }
 
-function getHTML(pemTaskMetadata : any, body : string) : string {
+function getHTML(styles : string, pemTaskMetadata : any, body : string) : string {
   return `
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Tezos nameList</title>
+    <title>${pemTaskMetadata.title}</title>
     <link class="task" type="text/css" rel="stylesheet" href="../../_common/modules/pemFioi/progTask.css">
     <link class="task" type="text/css" rel="stylesheet" href="../../_common/modules/ext/bootstrap/css/bootstrap.min.css">
     <script class="remove" src="../../_common/modules/ext/requirejs/require.js"></script>
@@ -69,6 +78,7 @@ function getHTML(pemTaskMetadata : any, body : string) : string {
         graderSamples: ['test1','test2']
       }
     </script>
+    ${styles}
   </head>
   <body ng-controller="taskController">
     <div id="task">
@@ -173,6 +183,10 @@ function getPath() : string {
   return join(process.cwd(), process.argv[2])
 }
 
+function getPathForResource(path : string) : string {
+  return join(resolve(__dirname), path)
+}
+
 function getFileContentSync(filePath: string): string {
   try {
     const data = readFileSync(filePath);
@@ -186,8 +200,8 @@ function getFileContentSync(filePath: string): string {
 function generate (body: string) {
   const mdx = evaluateSync(body, {
     ...runtime as any,
-    remarkPlugins: [remarkFrontMatter, remarkGfm, remarkCode],
-    rehypePlugins: [rehypeHighlight, addLinkAttributes, generateAttributesFromTitle]
+    remarkPlugins: [remarkFrontMatter, remarkGfm, remarkCode, RemarkAdmonition, remarkMath],
+    rehypePlugins: [rehypeHighlight, addLinkAttributes, generateAttributesFromTitle, rehypeAdmonition, rehypeKatex]
   }).default
 
   return renderToString(createElement(mdx))
@@ -198,4 +212,16 @@ const content = getFileContentSync(path)
 const matter = await getMatter(path)
 const body = generate(content)
 
-console.log(getHTML(getPEMTaskMetaData(matter), body))
+function getStyles(content : string) : string {
+  let admonition = ""
+  if (hasAdmonition(content)) {
+    admonition = "<link class=\"task\" type=\"text/css\" rel=\"stylesheet\" href=\"../_local_common/admonition.min.css\">"
+  }
+  let katex = ""
+  if (hasKatex(content)) {
+    katex = "<link class=\"task\" type=\"text/css\" rel=\"stylesheet\" href=\""+ katexStyle + "\">"
+  }
+  return admonition + katex
+}
+
+console.log(getHTML(getStyles(content), getPEMTaskMetaData(matter), body))
