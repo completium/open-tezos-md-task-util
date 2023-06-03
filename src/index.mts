@@ -21,6 +21,7 @@ import { matter as vfileMatter } from 'vfile-matter'
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 import { hasKatex, katexStyle } from './katex.mjs'
+import juice  from 'juice'
 
 const languages = ['michelson', 'ligo', 'mligo', 'religo', 'jsligo', 'smartpy', 'archetype']
 
@@ -215,13 +216,15 @@ const body = generate(content)
 function getStyles(content : string) : string {
   let admonition = ""
   if (hasAdmonition(content)) {
-    admonition = "<link class=\"task\" type=\"text/css\" rel=\"stylesheet\" href=\"../_local_common/admonition.min.css\">"
+    //admonition = "<link type=\"text/css\" rel=\"stylesheet\" href=\"../_local_common/admonition.min.css\">"
+    admonition = "<style>" + getFileContentSync(getPathForResource("../src/admonition.css"))  + "</style>"
   }
   let katex = ""
   if (hasKatex(content)) {
-    katex = "<link class=\"task\" type=\"text/css\" rel=\"stylesheet\" href=\""+ katexStyle + "\">"
+    //katex = "<link rel=\"stylesheet\" href=\""+ katexStyle + "\" />"
+    katex = "<style>" + getFileContentSync(getPathForResource("../src/katex.css"))  + "</style>"
   }
   return admonition + katex
 }
 
-console.log(getHTML(getStyles(content), getPEMTaskMetaData(matter), body))
+console.log(juice(getHTML(getStyles(content), getPEMTaskMetaData(matter), body)))
