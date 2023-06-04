@@ -47,6 +47,51 @@ PEM task metadata are defaulted to:
 }
 ```
 
+### Language specific div or span
+
+The feature is available for the following language tags: `archetype` `smartpy` `mlligo` `jsligo` `michelson`
+
+#### div
+
+The following md code:
+
+```md
+<archetype>
+
+Some content specific to Archetype
+
+</archetype>
+```
+
+is compiled to:
+
+```html
+<div select-lang="archetype" data-lang="archetype">
+  <p>
+    Some content specific to Archetype
+  </p>
+</div>
+```
+
+#### span
+
+The following md code:
+
+```md
+This is [inlined content specific to archetype](archetype).
+```
+
+is compiled to:
+
+```html
+<p>
+This is
+<span select-lang="archetype" data-lang="archetype">
+  inlined content specific to archetype
+</span>
+</p>
+```
+
 ### Code block
 
 Language is specified with standard triple back quote followed by language id; for example:

@@ -34,3 +34,11 @@ this is some information
 ## Katex equation
 
 $$ (a+b)^2 = a^2 + 2*a*b + b^2 $$
+
+<archetype>
+
+This is just visible with archetype
+
+</archetype>
+
+This [span element of text](archetype) is only visible to archetype.

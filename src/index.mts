@@ -20,6 +20,7 @@ import { VFile } from 'vfile'
 import { matter as vfileMatter } from 'vfile-matter'
 import remarkMath from 'remark-math';
 import { hasKatex, katexStyle } from './katex/katex.mjs'
+import { languagesToDiv, linkToSpan } from './language.mjs'
 
 const languages = ['michelson', 'ligo', 'mligo', 'religo', 'jsligo', 'smartpy', 'archetype']
 
@@ -200,7 +201,7 @@ function getFileContentSync(filePath: string): string {
 function generate (body: string) {
   const mdx = evaluateSync(body, {
     ...runtime as any,
-    remarkPlugins: [remarkFrontMatter, remarkGfm, remarkCode, RemarkAdmonition, remarkMath],
+    remarkPlugins: [remarkFrontMatter, remarkGfm, remarkCode, RemarkAdmonition, remarkMath, languagesToDiv, linkToSpan],
     rehypePlugins: [rehypeHighlight, addLinkAttributes, generateAttributesFromTitle]
   }).default
 
