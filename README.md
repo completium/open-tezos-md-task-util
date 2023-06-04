@@ -42,7 +42,8 @@ PEM task metadata are defaulted to:
   "testMode": "false",
   "limits" : {
     "*": {"time": "60000", "memory": "60000"}
-  }
+  },
+  "common" : "../../_common"
 }
 ```
 
@@ -89,12 +90,22 @@ This is some information
 :::
 ```
 
+This is compiled to:
+```html
+<div admonition admonition-type="info"><p>This is some info</p></div>
+```
+
 ### Katex equations
 
 Katex equation is available; for example:
 
 ```md
 $$ (a+b)^2 = a^2 + 2*a*b + b^2 $$
+```
+
+This is compiled to:
+```html
+<span class="math math-inline">(a+b)^2 = a^2 + 2*a*b + b^2</span>
 ```
 
 ### HTML tags

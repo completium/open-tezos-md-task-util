@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Example</title>
+    <link class="task" type="text/css" rel="stylesheet" href="../../_common/modules/pemFioi/progTask.css">
+    <link class="task" type="text/css" rel="stylesheet" href="../../_common/modules/ext/bootstrap/css/bootstrap.min.css">
+    <script class="remove" src="../../_common/modules/ext/requirejs/require.js"></script>
+    <script type="text/javascript">
+      var modulesPath ='../../_common/modules';
+      var taskPlatformPath ='../../_common/task-platform';
+    </script>
+    <script type="text/javascript" src="../../_common/modules/pemFioi/progTaskConfig-1.0.js"></script>
+    <script type="text/javascript" class="remove">
+      // general metadata conforming the PEM API Documentation for getMetaData
+      var PEMTaskMetaData = {
+  "license": "MIT",
+  "language": "en",
+  "version": "0.1",
+  "baseUrl": "",
+  "supportedLanguages": [
+    "michelson",
+    "ligo",
+    "mligo",
+    "religo",
+    "jsligo",
+    "smartpy",
+    "archetype"
+  ],
+  "hasUserTests": false,
+  "testMode": false,
+  "limits": {
+    "*": {
+      "time": 60000,
+      "memory": 60000
+    }
+  },
+  "common": "../_common",
+  "id": "testTask",
+  "title": "Example",
+  "authors": [
+    "benoit.rognier@edukera.com"
+  ]
+}
+
+      // Metadata specific to the FranceIOI tasks
+      var FIOITaskMetaData = {
+        evalOutputScript: '',
+        // This lists all possible languages
+        // file extensions must follow the following conventions so that language is recognized automatically.
+        // Additionally, a .txt file is recognized as 'pseudo' language
+        solutionSources : {
+//          "firstSource" : [ "sol.cpp",  "sol.c",  "sol.java",  "sol.jvs",  "sol.pas",  "sol.py" , "sol.ml"]
+        },
+        taskSamples : ['sample0'],
+        graderSamples: ['test1','test2']
+      }
+    </script>
+    <link type="text/css" rel="stylesheet" href="../_common/modules/admonition/admonition.min.css"></link><script type="text/javascript" src="../_common/modules/admonition/admonition-script.js"></script><link type="text/css" rel="stylesheet" href="../_common/modules/katex/katex.min.css"></link><script defer type="text/javascript" src="../_common/modules/katex/katex.min.js"></script><script defer type="text/javascript" src="../_common/modules/katex/katex-script.js"></script>
+  </head>
+  <body ng-controller="taskController">
+    <div id="task">
+      <h2>This is a test</h2>
+<p>Choose your language : <div select-lang-selector="true"></div></p>
+<p>This is an example.</p>
+<div select-lang="archetype" data-lang="archetype" data-show-source="true" data-code="archetype test
+
+variable toto : nat = 42"></div>
+<p>This is a bullet point list:</p>
+<ul>
+<li>point one</li>
+<li>point two</li>
+</ul>
+<p>This is the official <a href="https://tezos.com/" target="_blank" rel="noopener noreferrer">Tezos</a> site.</p>
+<p>This is a <a href="https://archetype-lang.org/" target="_blank" rel="noopener noreferrer" select-lang="archetype" data-lang="archetype">link</a> just for archetype.</p>
+<div admonition="true" admonition-type="info"><p>this is some information</p></div>
+<h2>Katex equation</h2>
+<p><span class="math math-inline">(a+b)^2 = a^2 + 2*a*b + b^2</span></p>
+    </div>
+  </body>
+</html>
+

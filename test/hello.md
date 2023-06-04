@@ -2,6 +2,7 @@
 id : testTask
 title: Example
 authors : [benoit.rognier@edukera.com]
+common : ../_common
 ---
 
 ## This is a test

@@ -1,4 +1,4 @@
-import { hasAdmonition, rehypeAdmonition, RemarkAdmonition } from './admonition.mjs'
+import { hasAdmonition, RemarkAdmonition } from './admonition/admonition-remark.mjs'
 import { evaluateSync } from '@mdx-js/mdx'
 import { readFileSync } from 'fs'
 import { dirname, join, resolve } from 'path'
@@ -18,10 +18,8 @@ import { visit } from 'unist-util-visit'
 import { fileURLToPath } from 'url';
 import { VFile } from 'vfile'
 import { matter as vfileMatter } from 'vfile-matter'
-import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
-import { hasKatex, katexStyle } from './katex.mjs'
-import juice  from 'juice'
+import { hasKatex, katexStyle } from './katex/katex.mjs'
 
 const languages = ['michelson', 'ligo', 'mligo', 'religo', 'jsligo', 'smartpy', 'archetype']
 
@@ -40,7 +38,8 @@ const DefaultPEMTaskMetaData = {
   testMode: false,
   limits : {
     "*": {time: 60000, memory: 60000}
-  }
+  },
+  common : "../../_common",
 }
 
 function getPEMTaskMetaData(data : any) {
@@ -202,7 +201,7 @@ function generate (body: string) {
   const mdx = evaluateSync(body, {
     ...runtime as any,
     remarkPlugins: [remarkFrontMatter, remarkGfm, remarkCode, RemarkAdmonition, remarkMath],
-    rehypePlugins: [rehypeHighlight, addLinkAttributes, generateAttributesFromTitle, rehypeAdmonition, rehypeKatex]
+    rehypePlugins: [rehypeHighlight, addLinkAttributes, generateAttributesFromTitle]
   }).default
 
   return renderToString(createElement(mdx))
@@ -213,18 +212,19 @@ const content = getFileContentSync(path)
 const matter = await getMatter(path)
 const body = generate(content)
 
-function getStyles(content : string) : string {
-  let admonition = ""
+function getImports(content : string, matter : any) : string {
+  let admonition_imports = ""
   if (hasAdmonition(content)) {
-    //admonition = "<link type=\"text/css\" rel=\"stylesheet\" href=\"../_local_common/admonition.min.css\">"
-    admonition = "<style>" + getFileContentSync(getPathForResource("../src/admonition.css"))  + "</style>"
+    admonition_imports += `<link type="text/css" rel="stylesheet" href="${matter.common}/modules/admonition/admonition.min.css"></link>`
+    admonition_imports += `<script type="text/javascript" src="${matter.common}/modules/admonition/admonition-script.js"></script>`
   }
-  let katex = ""
+  let katex_imports = ""
   if (hasKatex(content)) {
-    //katex = "<link rel=\"stylesheet\" href=\""+ katexStyle + "\" />"
-    katex = "<style>" + getFileContentSync(getPathForResource("../src/katex.css"))  + "</style>"
+    katex_imports += `<link type="text/css" rel="stylesheet" href="${matter.common}/modules/katex/katex.min.css"></link>`
+    katex_imports += `<script defer type="text/javascript" src="${matter.common}/modules/katex/katex.min.js"></script>`
+    katex_imports += `<script defer type="text/javascript" src="${matter.common}/modules/katex/katex-script.js"></script>`
   }
-  return admonition + katex
+  return admonition_imports + katex_imports
 }
 
-console.log(juice(getHTML(getStyles(content), getPEMTaskMetaData(matter), body)))
+console.log(getHTML(getImports(content, matter), getPEMTaskMetaData(matter), body))
