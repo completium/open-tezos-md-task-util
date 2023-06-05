@@ -1,12 +1,14 @@
-This utility generates an html file from a MD file for an open-tezos task.
+# Introduction
 
-# Install
+This utility generates the `index.html` of an [Open Tezos](https://opentezos.com/) task from a Markdown file with standard syntax plus some dedicated md syntax.
+
+### Install
 
 ```
 npm i -g @completium/open-tezos-md-task-util@latest
 ```
 
-# Run
+### Run
 
 The package installs the binary `mdtask2html`:
 
@@ -14,9 +16,7 @@ The package installs the binary `mdtask2html`:
 $ mdtask2html test.md > index.html
 ```
 
-# Features
-
-## Task metadata
+# Metadata
 
 It supports frontMatter style PEM task medata. For example:
 
@@ -47,11 +47,11 @@ PEM task metadata are defaulted to:
 }
 ```
 
-## Language specific elements
+# Language specific elements
 
-The main feature is to dedicate an task element to a specific language, that is an element that is displayed only for the selected language : paragraph, inlined text, link, code block.
+The main feature is to dedicate an utterance element to a specific language, that is an element that is displayed only for the selected language : paragraph, inlined text, code block and link.
 
-The following language tags are supported: `michelson`,`'ligo`, `mligo`, `religo`, `jsligo`, `smartpy` and `archetype`.
+The following language tags are supported: `michelson`, `ligo`, `mligo`, `religo`, `jsligo`, `smartpy` and `archetype`.
 
 ### Paragraph
 
@@ -125,7 +125,7 @@ This is compiled to:
 <a href="https://archetype-lang.org/" target="_blank" rel="noopener noreferrer" select-lang="archetype" data-lang="archetype">doc</a>
 ```
 
-## Admonitions
+# Admonitions
 
 5 types of admonitions are supported: `info`, `note`, `tip`, `caution`, `danger`
 
@@ -142,9 +142,9 @@ This is compiled to:
 <div admonition admonition-type="info"><p>This is some info</p></div>
 ```
 
-## Katex equations
+# Katex equations
 
-Katex equation is available; for example:
+[Katex](https://katex.org/) equation is available; for example:
 
 ```md
 $$ (a+b)^2 = a^2 + 2*a*b + b^2 $$
@@ -155,7 +155,7 @@ This is compiled to:
 <span class="math math-inline">(a+b)^2 = a^2 + 2*a*b + b^2</span>
 ```
 
-## HTML tags
+# HTML tags
 
 It supports basic html tags (`div`, `pre`, `code`, ...). For example to add the language selector:
 
