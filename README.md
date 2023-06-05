@@ -1,12 +1,12 @@
 This utility generates an html file from a MD file for an open-tezos task.
 
-## Install
+# Install
 
 ```
 npm i -g @completium/open-tezos-md-task-util@latest
 ```
 
-## Run
+# Run
 
 The package installs the binary `mdtask2html`:
 
@@ -14,9 +14,9 @@ The package installs the binary `mdtask2html`:
 $ mdtask2html test.md > index.html
 ```
 
-## Features
+# Features
 
-### Task metadata
+## Task metadata
 
 It supports frontMatter style PEM task medata. For example:
 
@@ -47,11 +47,13 @@ PEM task metadata are defaulted to:
 }
 ```
 
-### Language specific div or span
+## Language specific elements
 
-The feature is available for the following language tags: `archetype` `smartpy` `mlligo` `jsligo` `michelson`
+The main feature is to dedicate an task element to a specific language, that is an element that is displayed only for the selected language : paragraph, inlined text, link, code block.
 
-#### div
+The following language tags are supported: `michelson`,`'ligo`, `mligo`, `religo`, `jsligo`, `smartpy` and `archetype`.
+
+### Paragraph
 
 The following md code:
 
@@ -73,7 +75,7 @@ is compiled to:
 </div>
 ```
 
-#### span
+### Inlined text
 
 The following md code:
 
@@ -111,7 +113,7 @@ variable counter : nat = 0">
 </div>
 ```
 
-### Links
+### Link
 
 It is possible to specify the language associated to a link by adding the language identifier after the url. For example, to display the link for archetype language:
 
@@ -123,7 +125,7 @@ This is compiled to:
 <a href="https://archetype-lang.org/" target="_blank" rel="noopener noreferrer" select-lang="archetype" data-lang="archetype">doc</a>
 ```
 
-### Admonitions
+## Admonitions
 
 5 types of admonitions are supported: `info`, `note`, `tip`, `caution`, `danger`
 
@@ -140,7 +142,7 @@ This is compiled to:
 <div admonition admonition-type="info"><p>This is some info</p></div>
 ```
 
-### Katex equations
+## Katex equations
 
 Katex equation is available; for example:
 
@@ -153,7 +155,7 @@ This is compiled to:
 <span class="math math-inline">(a+b)^2 = a^2 + 2*a*b + b^2</span>
 ```
 
-### HTML tags
+## HTML tags
 
 It supports basic html tags (`div`, `pre`, `code`, ...). For example to add the language selector:
 
