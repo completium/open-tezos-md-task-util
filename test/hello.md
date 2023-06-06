@@ -27,7 +27,7 @@ This is a [link](https://archetype-lang.org/ "archetype") just for archetype.
 
 :::info
 
-this is some information
+this is some asmonition info section
 
 :::
 

@@ -1,6 +1,6 @@
 # Introduction
 
-This utility generates the `index.html` of an [Open Tezos](https://opentezos.com/) task from a Markdown file with standard syntax plus some dedicated md syntax.
+This utility generates the `index.html` of an [Open Tezos](https://opentezos.com/) task from a Markdown file.
 
 ### Install
 
@@ -13,7 +13,7 @@ npm i -g @completium/open-tezos-md-task-util@latest
 The package installs the binary `mdtask2html`:
 
 ```
-$ mdtask2html test.md > index.html
+$ mdtask2html index.md > index.html
 ```
 
 # Metadata
@@ -142,9 +142,11 @@ This is compiled to:
 <div admonition admonition-type="info"><p>This is some info</p></div>
 ```
 
-# Katex equations
+The script to process this div is available [here](https://github.com/completium/open-tezos-md-task-util/tree/main/_common/modules/admonition).
 
-[Katex](https://katex.org/) equation is available; for example:
+# Math expression
+
+Mathematical expressions can be specified with `$$` delimiters:
 
 ```md
 $$ (a+b)^2 = a^2 + 2*a*b + b^2 $$
@@ -154,6 +156,8 @@ This is compiled to:
 ```html
 <span class="math math-inline">(a+b)^2 = a^2 + 2*a*b + b^2</span>
 ```
+
+This div may typically be processed with [Katex](https://katex.org/).
 
 # HTML tags
 
