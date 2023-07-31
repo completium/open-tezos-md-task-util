@@ -38,6 +38,7 @@ PEM task metadata are defaulted to:
   "version": "0.1",
   "baseUrl" : "",
   "supportedLanguages": ["michelson", "ligo", "mligo", "religo", "jsligo", "smartpy", "archetype"],
+  "evaluationTags": ["tezos"],
   "hasUserTests": "false",
   "testMode": "false",
   "limits" : {
