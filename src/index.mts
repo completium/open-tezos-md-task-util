@@ -35,6 +35,7 @@ const DefaultPEMTaskMetaData = {
   version: "0.1",
   baseUrl : "",
   supportedLanguages: languages,
+  evaluationTags: ["tezos"],
   hasUserTests: false, // can user build tests
   testMode: false,
   limits : {
@@ -54,14 +55,11 @@ function getHTML(styles : string, pemTaskMetadata : any, body : string) : string
   <head>
     <meta charset="utf-8">
     <title>${pemTaskMetadata.title}</title>
-    <link class="task" type="text/css" rel="stylesheet" href="../../_common/modules/pemFioi/progTask.css">
-    <link class="task" type="text/css" rel="stylesheet" href="../../_common/modules/ext/bootstrap/css/bootstrap.min.css">
-    <script class="remove" src="../../_common/modules/ext/requirejs/require.js"></script>
     <script type="text/javascript">
+      window.stringsLanguage = 'en';
       var modulesPath ='../../_common/modules';
-      var taskPlatformPath ='../../_common/task-platform';
     </script>
-    <script type="text/javascript" src="../../_common/modules/pemFioi/progTaskConfig-1.0.js"></script>
+    <script class="remove" type="text/javascript" src="../../_common/modules/pemFioi/importModules-1.4-mobileFirst.js" id="import-modules"></script>
     <script type="text/javascript" class="remove">
       // general metadata conforming the PEM API Documentation for getMetaData
       var PEMTaskMetaData = ${JSON.stringify(pemTaskMetadata, null, 2)}
@@ -78,12 +76,38 @@ function getHTML(styles : string, pemTaskMetadata : any, body : string) : string
         taskSamples : ['sample0'],
         graderSamples: ['test1','test2']
       }
+      
+      importModules(['smart-contract']);
     </script>
+    <script id="animation">
+       window.taskData = {
+         gridInfos: {
+           context: 'smart_contract',
+           importModules: ['smart_contract_config'],
+           conceptViewer: true,
+           includeBlocks: {
+             groupByCategory: true,
+             standardBlocks: {
+               wholeCategories: ['smart_contract_main_blocks', 'smart_contract_types'],
+             },
+           },
+           // expectedStorage: "(nat %nb_calls)",
+           // taskStrings: {
+           //   "storageDescription": {
+           //     "nb_calls": "it should contain the number of times make_call was called",
+           //   },
+           // },
+         }
+       };
+     </script>
     ${styles}
   </head>
-  <body ng-controller="taskController">
+  <body id="app">
+    <div id="react-container"></div>
     <div id="task">
-      ${body}
+      <div id="taskIntro">
+        ${body}
+      </div>
     </div>
   </body>
 </html>
